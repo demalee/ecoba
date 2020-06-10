@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+// Website routes
 Route::get('/', function () {
     return view('welcome');
 });
@@ -29,3 +34,12 @@ Route::get('blog/index', function () {
 Route::get('about-us/index', function () {
     return view('about-us/index');
 });
+
+// routes for chat functionality
+Route::get('chats', function () {
+    return view('chat.index');
+});
+
+Route::resource('messages', 'MessageController')->except([
+    'create',
+]);
