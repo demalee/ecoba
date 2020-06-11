@@ -123,7 +123,6 @@ $(function () {
         if (this.active_user) {
           axios.get(get_messages_url + '/' + this.active_user.id).then(function (response) {
             _this2.messages_list = response.data.messages;
-            scrollHistoryBottom();
           })["catch"](function (error) {
             console.log(error);
           });
@@ -156,9 +155,13 @@ $(function () {
           _this4.messages_list.push(e.message);
 
           _this4.getRecentContants();
-
-          scrollHistoryBottom();
         }
+      });
+    },
+    updated: function updated() {
+      this.$nextTick(function () {
+        console.log('Updated');
+        scrollHistoryBottom();
       });
     }
   });
@@ -166,10 +169,7 @@ $(function () {
   function scrollHistoryBottom() {
     msg_history = document.getElementById('msg_history');
     msg_history.scrollTop = msg_history.scrollHeight;
-    console.log('called');
   }
-
-  window.chat_app = chat_app; // for testing purposes only
 });
 
 /***/ }),

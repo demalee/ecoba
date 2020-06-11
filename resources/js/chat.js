@@ -29,7 +29,6 @@ $(function(){
                     axios.get(get_messages_url +'/'+ this.active_user.id)
                     .then((response) => {
                         this.messages_list = response.data.messages;
-                        scrollHistoryBottom();
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -54,7 +53,7 @@ $(function(){
             },
         },
 
-        created() {
+        created: function () {
             this.getRecentContants();
 
             Echo.private(`instant-messaging.${laravel.user.id}`)
@@ -64,18 +63,20 @@ $(function(){
                     if (this.active_user.id == e.message.sender.id) {
                         this.messages_list.push(e.message);
                         this.getRecentContants();
-                        scrollHistoryBottom();
                     }
                 });
+        },
+
+        updated: function () {
+            this.$nextTick(function () {
+                console.log('Updated');
+                scrollHistoryBottom();
+            })
         },
     });
 
     function scrollHistoryBottom() {
         msg_history = document.getElementById('msg_history');
         msg_history.scrollTop = msg_history.scrollHeight;
-
-        console.log('called');
     }
-
-    window.chat_app = chat_app;  // for testing purposes only
 });

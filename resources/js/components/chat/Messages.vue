@@ -29,5 +29,11 @@
                 return laravel.user.id == this.message.receiver.id
             },
         },
+
+        updated: function () {
+            this.$nextTick(function () {
+                console.log('Updated msgs');
+            })
+        },
     }
 </script>

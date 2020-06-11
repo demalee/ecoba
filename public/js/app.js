@@ -1936,6 +1936,11 @@ __webpack_require__.r(__webpack_exports__);
     incoming: function incoming() {
       return laravel.user.id == this.message.receiver.id;
     }
+  },
+  updated: function updated() {
+    this.$nextTick(function () {
+      console.log('Updated msgs');
+    });
   }
 });
 
