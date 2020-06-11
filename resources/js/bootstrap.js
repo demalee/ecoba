@@ -31,19 +31,19 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
  import Echo from 'laravel-echo';
 
- // using laravel-echo with socket.io
- window.io = require('socket.io-client');
- window.Echo = new Echo({
-     broadcaster: 'socket.io',
-     host: window.location.hostname + ':6001',
-     // client: io,
- });
-
- // // using laravel-echo with pusher
- // window.Pusher = require('pusher-js');
+ // // using laravel-echo with socket.io
+ // window.io = require('socket.io-client');
  // window.Echo = new Echo({
- //     broadcaster: 'pusher',
- //     key: laravel.env.MIX_PUSHER_APP_KEY,
- //     cluster: laravel.env.MIX_PUSHER_APP_CLUSTER,
- //     forceTLS: true,
+ //     broadcaster: 'socket.io',
+ //     host: window.location.hostname + ':6001',
+ //     // client: io,
  // });
+
+ // using laravel-echo with pusher
+ window.Pusher = require('pusher-js');
+ window.Echo = new Echo({
+     broadcaster: 'pusher',
+     key: laravel.env.MIX_PUSHER_APP_KEY,
+     cluster: laravel.env.MIX_PUSHER_APP_CLUSTER,
+     forceTLS: true,
+ });

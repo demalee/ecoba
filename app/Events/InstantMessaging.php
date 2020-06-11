@@ -69,6 +69,9 @@ class InstantMessaging implements ShouldBroadcast
      */
     public function broadcastWith()
     {
-        return MessageFacade::formatMessageOutput($this->message);
+        return [
+            'message' => MessageFacade::formatMessageOutput($this->message),
+            'response_text' => 'Incomming message',
+        ];
     }
 }

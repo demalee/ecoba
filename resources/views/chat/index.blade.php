@@ -38,7 +38,7 @@
             <div class="mesgs">
 
                 <!-- Messages display -->
-                <div class="msg_history">
+                <div class="msg_history" id="msg_history">
                     <messages
                         v-for="message in messages_list"
                         v-bind:key="message.id"
@@ -47,7 +47,7 @@
                 </div><!-- End of messages display -->
 
                 <!-- Message Input -->
-                <div class="type_msg">
+                <div class="type_msg" v-if="active_user.id">
                     <div class="input_msg_write">
                         <input type="text" class="write_msg" placeholder="Type a message" v-model="typed_message"/>
                         <button class="msg_send_btn" type="button" v-on:click="sendMessage">
@@ -69,7 +69,6 @@
     // app DOM id (app_id = '#id')
     const app_id = "#chat-app";
     const get_contacts_url = "{{ route('messages.index') }}";
-    // const get_messages_url = "{{ route('messages.show', ['message' => 1]) }}";
     const get_messages_url = "{{ route('messages.index') }}";
     const send_message_url = "{{ route('messages.store') }}";
 </script>
