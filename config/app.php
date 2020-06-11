@@ -227,6 +227,11 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+
+        /*
+         * Manually set aliases
+         */
+         'Message' => App\Message::class,
     ],
 
 ];

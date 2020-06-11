@@ -6,7 +6,7 @@
 
         <div class="received_msg">
             <div class="received_withd_msg">
-                <p>{{ message.text }}</p>
+                <p>{{ message.message }}</p>
                 <span class="time_date"> {{ message.created_at }}</span>
             </div>
         </div>
@@ -14,7 +14,7 @@
 
     <div class="outgoing_msg" v-else>
         <div class="sent_msg">
-            <p>{{ message.text }}</p>
+            <p>{{ message.message }}</p>
             <span class="time_date"> {{ message.created_at }}</span>
         </div>
     </div>

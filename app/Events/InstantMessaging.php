@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Message;
+use App\Facades\MessageFacade;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -68,13 +69,6 @@ class InstantMessaging implements ShouldBroadcast
      */
     public function broadcastWith()
     {
-        return [
-            'message' => $this->message->message,
-            'created_at' => $this->message->created_at->toFormattedDateString(),
-            'user' => [
-                'id' => $this->message->sender->id,
-                'name' => $this->message->sender->name,
-            ],
-        ];
+        return MessageFacade::formatMessageOutput($this->message);
     }
 }

@@ -49246,7 +49246,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "received_msg" }, [
           _c("div", { staticClass: "received_withd_msg" }, [
-            _c("p", [_vm._v(_vm._s(_vm.message.text))]),
+            _c("p", [_vm._v(_vm._s(_vm.message.message))]),
             _vm._v(" "),
             _c("span", { staticClass: "time_date" }, [
               _vm._v(" " + _vm._s(_vm.message.created_at))
@@ -49256,7 +49256,7 @@ var render = function() {
       ])
     : _c("div", { staticClass: "outgoing_msg" }, [
         _c("div", { staticClass: "sent_msg" }, [
-          _c("p", [_vm._v(_vm._s(_vm.message.text))]),
+          _c("p", [_vm._v(_vm._s(_vm.message.message))]),
           _vm._v(" "),
           _c("span", { staticClass: "time_date" }, [
             _vm._v(" " + _vm._s(_vm.message.created_at))

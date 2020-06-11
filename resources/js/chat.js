@@ -52,57 +52,16 @@ $(function(){
 
         data: {
             active_user: {},
-            users_list: [
-                {
-                    id: 3,
-                    name: "Mark Doe",
-                    last_message: "Hello",
-                    last_message_date: "June 9",
-                },
-                {
-                    id: 2,
-                    name: "Jane Doe",
-                    last_message: "Please don't forget",
-                    last_message_date: "June 9",
-                },
-            ],
-            messages_list: [
-                {
-                    id: 1,
-                    text: 'Hello',
-                    created_at: "11:01 AM | June 9",
-                    sender: {
-                        id: 1,
-                        name: "John Doe",
-                    },
-                    receiver: {
-                        id: 3,
-                        name: "Mark Doe",
-                    }
-                },
-                {
-                    id: 2,
-                    text: 'Wagwaan',
-                    created_at: "11:01 AM | June 9",
-                    sender: {
-                        id: 3,
-                        name: "Mark Doe",
-                    },
-                    receiver: {
-                        id: 1,
-                        name: "John Doe",
-                    }
-                },
-            ],
+            users_list: [],
+            messages_list: [],
             typed_message: "",
         },
 
         methods: {
             getRecentContants: function (event, user) {
                 axios.get(get_contacts_url)
-                .then(function (response) {
-                    console.log(response);
-                    // display_message(message_txt, "{{ Auth::user()->name }}")
+                .then((response) => {
+                    this.users_list = response.data.contacts;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -111,14 +70,9 @@ $(function(){
             getUserMessages: function (event, user) {
                 this.active_user = user;
                 if (this.active_user) {
-                    axios.get(get_messages_url, {
-                        params: {
-                            id: this.active_user.id
-                        }
-                    })
-                    .then(function (response) {
-                        console.log(response);
-                        // display_message(message_txt, "{{ Auth::user()->name }}")
+                    axios.get(get_messages_url +'/'+ this.active_user.id)
+                    .then((response) => {
+                        this.messages_list = response.data.messages;
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -127,14 +81,12 @@ $(function(){
             },
             sendMessage: function (event) {
                 if (this.typed_message.trim() != '' && this.active_user.id) {
-                    // post form data
                     axios.post(send_message_url, {
                         message: this.typed_message,
                         receiver: this.active_user.id,
                     })
-                    .then(function (response) {
-                        console.log(response);
-                        // display_message(message_txt, "{{ Auth::user()->name }}")
+                    .then((response) => {
+                        this.messages_list.push(response.data.message);
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -150,12 +102,10 @@ $(function(){
             Echo.private(`instant-messaging.${laravel.user.id}`)
                 .listen('.instant-messaging', (e) => {
                     console.log(e, 'Showing Message ...!');
-                    display_message(e.message, e.user.name);
+                    // display_message(e.message, e.user.name);
                 });
         },
     });
 
-    function display_message() {
-        console.log('message');
-    }
+    window.chat_app = chat_app;
 });

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Messsage;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // Bind facades
+        $this->app->bind('Messsage', function ($app) {
+          return new Message;
+        });
     }
 
     /**

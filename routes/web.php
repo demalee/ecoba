@@ -38,7 +38,7 @@ Route::get('about-us/index', function () {
 // routes for chat functionality
 Route::get('chats', function () {
     return view('chat.index');
-});
+})->middleware('auth');
 
 Route::resource('messages', 'MessageController')->except([
     'create',

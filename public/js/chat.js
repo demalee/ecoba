@@ -143,75 +143,42 @@ $(function () {
     el: app_id,
     data: {
       active_user: {},
-      users_list: [{
-        id: 3,
-        name: "Mark Doe",
-        last_message: "Hello",
-        last_message_date: "June 9"
-      }, {
-        id: 2,
-        name: "Jane Doe",
-        last_message: "Please don't forget",
-        last_message_date: "June 9"
-      }],
-      messages_list: [{
-        id: 1,
-        text: 'Hello',
-        created_at: "11:01 AM | June 9",
-        sender: {
-          id: 1,
-          name: "John Doe"
-        },
-        receiver: {
-          id: 3,
-          name: "Mark Doe"
-        }
-      }, {
-        id: 2,
-        text: 'Wagwaan',
-        created_at: "11:01 AM | June 9",
-        sender: {
-          id: 3,
-          name: "Mark Doe"
-        },
-        receiver: {
-          id: 1,
-          name: "John Doe"
-        }
-      }],
+      users_list: [],
+      messages_list: [],
       typed_message: ""
     },
     methods: {
       getRecentContants: function getRecentContants(event, user) {
+        var _this = this;
+
         axios.get(get_contacts_url).then(function (response) {
-          console.log(response); // display_message(message_txt, "{{ Auth::user()->name }}")
+          _this.users_list = response.data.contacts;
         })["catch"](function (error) {
           console.log(error);
         });
       },
       getUserMessages: function getUserMessages(event, user) {
+        var _this2 = this;
+
         this.active_user = user;
 
         if (this.active_user) {
-          axios.get(get_messages_url, {
-            params: {
-              id: this.active_user.id
-            }
-          }).then(function (response) {
-            console.log(response); // display_message(message_txt, "{{ Auth::user()->name }}")
+          axios.get(get_messages_url + '/' + this.active_user.id).then(function (response) {
+            _this2.messages_list = response.data.messages;
           })["catch"](function (error) {
             console.log(error);
           });
         }
       },
       sendMessage: function sendMessage(event) {
+        var _this3 = this;
+
         if (this.typed_message.trim() != '' && this.active_user.id) {
-          // post form data
           axios.post(send_message_url, {
             message: this.typed_message,
             receiver: this.active_user.id
           }).then(function (response) {
-            console.log(response); // display_message(message_txt, "{{ Auth::user()->name }}")
+            _this3.messages_list.push(response.data.message);
           })["catch"](function (error) {
             console.log(error);
           });
@@ -222,15 +189,11 @@ $(function () {
       this.getRecentContants(); // Listener for Event Broadcasts
 
       Echo["private"]("instant-messaging.".concat(laravel.user.id)).listen('.instant-messaging', function (e) {
-        console.log(e, 'Showing Message ...!');
-        display_message(e.message, e.user.name);
+        console.log(e, 'Showing Message ...!'); // display_message(e.message, e.user.name);
       });
     }
   });
-
-  function display_message() {
-    console.log('message');
-  }
+  window.chat_app = chat_app;
 });
 
 /***/ }),
